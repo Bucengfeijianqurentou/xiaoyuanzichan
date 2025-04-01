@@ -120,6 +120,14 @@ public class JieyongEntity<T> implements Serializable {
     @TableField(value = "transaction_hash")
     private String transactionHash;
 
+    /**
+     * 预计归还时间
+     */
+    @JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat
+    @TableField(value = "guihuan_time")
+    private Date guihuanTime;
+
 
     /**
 	 * 设置：主键
@@ -256,6 +264,20 @@ public class JieyongEntity<T> implements Serializable {
         this.transactionHash = transactionHash;
     }
 
+    /**
+     * 获取：预计归还时间
+     */
+    public Date getGuihuanTime() {
+        return guihuanTime;
+    }
+
+    /**
+     * 设置：预计归还时间
+     */
+    public void setGuihuanTime(Date guihuanTime) {
+        this.guihuanTime = guihuanTime;
+    }
+
     @Override
     public String toString() {
         return "Jieyong{" +
@@ -268,6 +290,7 @@ public class JieyongEntity<T> implements Serializable {
             ", insertTime=" + insertTime +
             ", createTime=" + createTime +
             ", transactionHash=" + transactionHash +
+            ", guihuanTime=" + guihuanTime +
         "}";
     }
 }

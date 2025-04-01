@@ -22,6 +22,7 @@
         ,a.insert_time as insertTime
         ,a.create_time as createTime
         ,a.transaction_hash as transactionHash
+        ,a.guihuan_time as guihuanTime
     </sql>
     <select id="selectListView" parameterType="map" resultType="com.entity.view.JieyongView" >
         SELECT
@@ -83,6 +84,12 @@
             </if>
             <if test=" params.transactionHash != '' and params.transactionHash != null and params.transactionHash != 'null' ">
                 and a.transaction_hash like CONCAT('%',#{params.transactionHash},'%')
+            </if>
+            <if test=" params.guihuanTimeStart != '' and params.guihuanTimeStart != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.guihuan_time) >= UNIX_TIMESTAMP(#{params.guihuanTimeStart}) ]]>
+            </if>
+            <if test=" params.guihuanTimeEnd != '' and params.guihuanTimeEnd != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.guihuan_time) <= UNIX_TIMESTAMP(#{params.guihuanTimeEnd}) ]]>
             </if>
 
                 <!-- 判断校园资产的id不为空 -->

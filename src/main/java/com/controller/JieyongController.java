@@ -235,6 +235,7 @@ public class JieyongController {
         params.put("assertId",shangpinEntity.getShangpinUuidNumber());
         params.put("assertName",shangpinEntity.getShangpinName());
         params.put("assertType",shangpinEntity.getShangpinTypes());
+        params.put("guihuan_time",jieyong.getGuihuanTime());
 
         jsonObject.put("params",params);
         String data = jsonObject.toJSONString();

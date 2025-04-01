@@ -86,6 +86,14 @@ public class JieyongVO implements Serializable {
     @TableField(value = "create_time")
     private Date createTime;
 
+    /**
+     * 预计归还时间
+     */
+    @JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat
+    @TableField(value = "guihuan_time")
+    private Date guihuanTime;
+
 
     /**
 	 * 设置：主键
@@ -206,6 +214,20 @@ public class JieyongVO implements Serializable {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    /**
+     * 获取：预计归还时间
+     */
+    public Date getGuihuanTime() {
+        return guihuanTime;
+    }
+
+    /**
+     * 设置：预计归还时间
+     */
+    public void setGuihuanTime(Date guihuanTime) {
+        this.guihuanTime = guihuanTime;
     }
 
 }

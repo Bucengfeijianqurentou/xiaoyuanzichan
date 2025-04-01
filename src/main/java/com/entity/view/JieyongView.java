@@ -23,7 +23,12 @@ public class JieyongView extends JieyongEntity implements Serializable {
 		*/
 		private String guihuanValue;
 
-
+		/**
+		* 预计归还时间的值
+		*/
+		@JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
+		@DateTimeFormat
+		private Date guihuanTime;
 
 		//级联表 shangpin
 			/**
@@ -123,6 +128,20 @@ public class JieyongView extends JieyongEntity implements Serializable {
 			*/
 			public void setGuihuanValue(String guihuanValue) {
 				this.guihuanValue = guihuanValue;
+			}
+
+			/**
+			* 获取：预计归还时间
+			*/
+			public Date getGuihuanTime() {
+				return guihuanTime;
+			}
+
+			/**
+			* 设置：预计归还时间
+			*/
+			public void setGuihuanTime(Date guihuanTime) {
+				this.guihuanTime = guihuanTime;
 			}
 
 
