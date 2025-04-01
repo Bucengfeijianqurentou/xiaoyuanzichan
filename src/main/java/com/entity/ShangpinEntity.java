@@ -134,6 +134,12 @@ public class ShangpinEntity<T> implements Serializable {
     @TableField(value = "transaction_hash")
     private String transactionHash;
 
+    /**
+     * 资产价值
+     */
+    @TableField(value = "price")
+    private Integer price;
+
 
     /**
 	 * 设置：主键
@@ -300,6 +306,20 @@ public class ShangpinEntity<T> implements Serializable {
         this.transactionHash = transactionHash;
     }
 
+    /**
+     * 获取：资产价值
+     */
+    public Integer getPrice() {
+        return price;
+    }
+
+    /**
+     * 设置：资产价值
+     */
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
     @Override
     public String toString() {
         return "Shangpin{" +
@@ -314,6 +334,7 @@ public class ShangpinEntity<T> implements Serializable {
             ", shangpinContent=" + shangpinContent +
             ", createTime=" + createTime +
             ", transactionHash=" + transactionHash +
+            ", price=" + price +
         "}";
     }
 }

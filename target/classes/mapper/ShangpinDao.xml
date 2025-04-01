@@ -24,6 +24,7 @@
         ,a.shangpin_content as shangpinContent
         ,a.create_time as createTime
         ,a.transaction_hash as transactionHash
+        ,a.price as price
     </sql>
     <select id="selectListView" parameterType="map" resultType="com.entity.view.ShangpinView" >
         SELECT
@@ -75,6 +76,15 @@
             </if>
             <if test=" params.transactionHash != '' and params.transactionHash != null and params.transactionHash != 'null' ">
                 and a.transaction_hash like CONCAT('%',#{params.transactionHash},'%')
+            </if>
+            <if test="params.priceStart != null and params.priceStart != ''">
+                <![CDATA[  and a.price >= #{params.priceStart}   ]]>
+            </if>
+            <if test="params.priceEnd != null and params.priceEnd != ''">
+                <![CDATA[  and a.price <= #{params.priceEnd}   ]]>
+            </if>
+            <if test="params.price != null and params.price != ''">
+                and a.price = #{params.price}
             </if>
         </where>
 

@@ -136,14 +136,15 @@ public class ShangpinController {
             .eq("didian_types", shangpin.getDidianTypes())
             .eq("shangpin_kucun_number", shangpin.getShangpinKucunNumber())
             .eq("shangpin_delete", shangpin.getShangpinDelete())
+            .eq("price", shangpin.getPrice())
             ;
 
         logger.info("sql语句:"+queryWrapper.getSqlSegment());
-        String hash = weBASEService.generateTransactionHash();
         ShangpinEntity shangpinEntity = shangpinService.selectOne(queryWrapper);
         if(shangpinEntity==null){
-            shangpin.setShangpinDelete(1);
             shangpin.setCreateTime(new Date());
+            shangpin.setShangpinDelete(1);
+            String hash = weBASEService.generateTransactionHash();
             shangpin.setTransactionHash(hash);
             shangpinService.insert(shangpin);
 
@@ -159,6 +160,7 @@ public class ShangpinController {
             params.put("assertId",shangpin.getShangpinUuidNumber());
             params.put("assertName",shangpin.getShangpinName());
             params.put("assertType",shangpin.getShangpinTypes());
+            params.put("price",shangpin.getPrice());
 
             jsonObject.put("params",params);
             String data = jsonObject.toJSONString();
@@ -196,7 +198,6 @@ public class ShangpinController {
 
             Map map = new HashMap<>();
             map.put("transactionHash",hash);
-
             return R.ok(map);
         }else {
             return R.error(511,"表中有相同数据");
@@ -223,6 +224,7 @@ public class ShangpinController {
             .eq("didian_types", shangpin.getDidianTypes())
             .eq("shangpin_kucun_number", shangpin.getShangpinKucunNumber())
             .eq("shangpin_delete", shangpin.getShangpinDelete())
+            .eq("price", shangpin.getPrice())
             ;
 
         logger.info("sql语句:"+queryWrapper.getSqlSegment());
