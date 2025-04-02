@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.ZhuanrangDao">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        a.id as id
+        ,a.from_id as fromId
+        ,a.to_id as toId
+        ,a.create_time as createTime
+        ,a.shangpin_id as shangpinId
+        ,a.shangpin_name as shangpinName
+        ,a.shangpin_price as shangpinPrice
+        ,a.status as status
+    </sql>
+    
+    <select id="selectListView" parameterType="map" resultType="com.entity.view.ZhuanrangView" >
+        SELECT 
+        <include refid="Base_Column_List" />
+
+        FROM zhuanrang  a
+        <where>
+            <if test="params.ids != null">
+                and a.id in
+                <foreach item="item" index="index" collection="params.ids" open="(" separator="," close=")">
+                #{item}
+                </foreach>
+            </if>
+            <if test="params.fromId != null and params.fromId != ''">
+                and a.from_id = #{params.fromId}
+            </if>
+            <if test="params.toId != null and params.toId != ''">
+                and a.to_id = #{params.toId}
+            </if>
+            <if test="params.shangpinId != null and params.shangpinId != ''">
+                and a.shangpin_id = #{params.shangpinId}
+            </if>
+            <if test="params.shangpinName != null and params.shangpinName != ''">
+                and a.shangpin_name like CONCAT('%',#{params.shangpinName},'%')
+            </if>
+            <if test="params.shangpinPriceStart != null and params.shangpinPriceStart != ''">
+                <![CDATA[  and a.shangpin_price >= #{params.shangpinPriceStart}   ]]>
+            </if>
+            <if test="params.shangpinPriceEnd != null and params.shangpinPriceEnd != ''">
+                <![CDATA[  and a.shangpin_price <= #{params.shangpinPriceEnd}   ]]>
+            </if>
+            <if test="params.status != null and params.status != ''">
+                and a.status = #{params.status}
+            </if>
+            <if test=" params.createTimeStart != '' and params.createTimeStart != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.create_time) >= UNIX_TIMESTAMP(#{params.createTimeStart}) ]]>
+            </if>
+            <if test=" params.createTimeEnd != '' and params.createTimeEnd != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.create_time) <= UNIX_TIMESTAMP(#{params.createTimeEnd}) ]]>
+            </if>
+        </where>
+
+        order by a.id desc
+    </select>
+
+</mapper> 
