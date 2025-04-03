@@ -128,14 +128,18 @@ public class ZhuanrangController {
 
         EntityWrapper<ZhuanrangEntity> ew = new EntityWrapper<>();
         ew.in("shangpin_id", assetIds);
-        ew.eq("status", 1); // 1表示转让中
+        // 获取最新的转让记录，按创建时间倒序
+        ew.orderBy("create_time", false);
 
         List<ZhuanrangEntity> transfers = zhuanrangService.selectList(ew);
         
         // 构建资产ID到转让状态的映射
         Map<Integer, Integer> statusMap = new HashMap<>();
         for (ZhuanrangEntity transfer : transfers) {
-            statusMap.put(transfer.getShangpinId(), transfer.getStatus());
+            // 只记录每个资产的最新状态（因为按创建时间倒序，第一次遇到的就是最新的）
+            if (!statusMap.containsKey(transfer.getShangpinId())) {
+                statusMap.put(transfer.getShangpinId(), transfer.getStatus());
+            }
         }
 
         return R.ok().put("data", statusMap);
