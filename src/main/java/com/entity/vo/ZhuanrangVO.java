@@ -68,6 +68,16 @@ public class ZhuanrangVO implements Serializable {
     @TableField(value = "status")
     private Integer status;
 
+    /**
+     * 转让方用户名（显示用）
+     */
+    private String fromUserName;
+
+    /**
+     * 接收方用户名（显示用）
+     */
+    private String toUserName;
+
     public Integer getId() {
         return id;
     }
@@ -130,5 +140,21 @@ public class ZhuanrangVO implements Serializable {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getFromUserName() {
+        return fromUserName;
+    }
+
+    public void setFromUserName(String fromUserName) {
+        this.fromUserName = fromUserName;
+    }
+
+    public String getToUserName() {
+        return toUserName;
+    }
+
+    public void setToUserName(String toUserName) {
+        this.toUserName = toUserName;
     }
 } 
