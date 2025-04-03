@@ -84,7 +84,10 @@ public class ZhuanrangEntity<T> implements Serializable {
     private Integer shangpinPrice;
 
     /**
-     * 转让状态 (1: 未接收 2: 已接收 默认值为1)
+     * 转让状态 
+     * 1: 转让中（未处理）
+     * 2: 已接受
+     * 3: 已拒绝
      */
     @TableField(value = "status")
     private Integer status;
