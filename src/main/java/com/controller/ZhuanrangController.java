@@ -3,6 +3,8 @@ package com.controller;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Date;
+import java.util.List;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -112,5 +114,30 @@ public class ZhuanrangController {
     public R delete(@RequestBody Long[] ids){
         zhuanrangService.deleteBatchIds(Arrays.asList(ids));
         return R.ok();
+    }
+
+    /**
+     * 批量查询资产的转让状态
+     */
+    @RequestMapping("/status")
+    public R getTransferStatus(@RequestBody Map<String, List<Integer>> params) {
+        List<Integer> assetIds = params.get("assetIds");
+        if (assetIds == null || assetIds.isEmpty()) {
+            return R.error("资产ID列表不能为空");
+        }
+
+        EntityWrapper<ZhuanrangEntity> ew = new EntityWrapper<>();
+        ew.in("shangpin_id", assetIds);
+        ew.eq("status", 1); // 1表示转让中
+
+        List<ZhuanrangEntity> transfers = zhuanrangService.selectList(ew);
+        
+        // 构建资产ID到转让状态的映射
+        Map<Integer, Integer> statusMap = new HashMap<>();
+        for (ZhuanrangEntity transfer : transfers) {
+            statusMap.put(transfer.getShangpinId(), transfer.getStatus());
+        }
+
+        return R.ok().put("data", statusMap);
     }
 } 
