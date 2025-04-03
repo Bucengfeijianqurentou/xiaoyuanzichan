@@ -2,6 +2,7 @@ package com.controller;
 
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,8 @@ import com.service.ZhuanrangService;
 import com.utils.PageUtils;
 import com.utils.R;
 import com.utils.MPUtil;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 资产转让 后端接口
@@ -82,7 +85,13 @@ public class ZhuanrangController {
      * 保存
      */
     @RequestMapping("/save")
-    public R save(@RequestBody ZhuanrangEntity zhuanrang){
+    public R save(@RequestBody ZhuanrangEntity zhuanrang, HttpServletRequest request){
+        String userId = String.valueOf(request.getSession().getAttribute("userId"));
+        if(userId == null || "".equals(userId)){
+            return R.error(511,"请先登录");
+        }
+        zhuanrang.setFromId(Integer.valueOf(userId));
+        zhuanrang.setCreateTime(new Date());
         zhuanrangService.insert(zhuanrang);
         return R.ok();
     }
