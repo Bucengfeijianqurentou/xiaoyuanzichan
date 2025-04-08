@@ -3,7 +3,7 @@ package com.chain.constants;
 import com.chain.utils.IOUtil;
 
 public class ChainConstants {
-    public static final  String URL="http://192.168.208.149:5002";
+    public static final  String URL="http://192.168.124.149:5002";
     //管理员区块俩地址
     public static final  String ADMIN_ADDRESS = "0xd32230e205601544e9ef602f7e664007694cd201";
     //合约地址

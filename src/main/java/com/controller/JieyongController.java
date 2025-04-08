@@ -475,8 +475,33 @@ public class JieyongController {
         }
     }
 
-
-
-
+    /**
+     * 小程序专用借用保存接口
+     */
+    @IgnoreAuth
+    @RequestMapping("/wxSave")
+    public R wxSave(@RequestBody JieyongEntity jieyong){
+        logger.debug("wxSave方法:,,Controller:{},,jieyong:{}",this.getClass().getName(),JSONObject.toJSONString(jieyong));
+        
+        // 验证资产是否存在且有库存
+        ShangpinEntity shangpin = shangpinService.selectById(jieyong.getShangpinId());
+        if(shangpin == null){
+            return R.error(511,"借用的资产不存在");
+        }
+        if(shangpin.getShangpinKucunNumber() <= 0){
+            return R.error(511,"该资产已无库存");
+        }
+        
+        // 设置借用状态为待审核
+        jieyong.setGuihuanTypes(3); // 3表示待审核
+        
+        // 设置创建时间
+        jieyong.setCreateTime(new Date());
+        
+        // 保存借用信息
+        jieyongService.insert(jieyong);
+        
+        return R.ok();
+    }
 
 }
